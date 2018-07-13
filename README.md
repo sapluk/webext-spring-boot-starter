@@ -1,15 +1,20 @@
 # webext-spring-boot-starter
-## spring-boot-web扩展
-本项目的目的用于扩展 spring boot web 项目，提供一些常用的功能
+## 1. 项目简述：spring-boot-web扩展
 
-## 在spring-boot-web的基础上，支持一下特性：
+本项目的目的用于扩展 spring boot web 项目，提供一些常用的功能。
+
+## 2. 适用范围：spring boot 2.x web 项目
+
+ 该项目不支持 ``spring boot 1.x``。
+
+## 3. 功能介绍：在spring-boot-web的基础上，支持以下特性：
 1. [v0.0.1] @JsonParam 自动解析json字符串为参数
 2. [v0.0.1] @ParamName 制定前端传入VO时，VO中参数和变量的关系
 3. [v0.0.1] 支持返回对象进行下载
 4. [v0.0.1] 自动解析日期
 5. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
 
-## 0. 快速使用
+## 4. 快速使用
 1. IDE 中新建一个 spring boot web 项目
 
 2. 在您的 spring boot 项目的 pom.xml 文件引用：
@@ -21,13 +26,12 @@
     <version>0.0.1</version>
   </dependency>
 ```
-``
-注：该扩展基于 spring boot 2.0.3，未在 spring boot 1.x 版本上测试
-``
+
+3. 使用者无需添加任何配置，开箱即用
 
 # ====== 使用说明 ======
 
-## v0.0.1_1. @JsonParam 自动解析json字符串为参数
+## 1. [v0.0.1] @JsonParam 自动解析json字符串为参数
   @JsonParam 用于接收前端的json字符串，并自动转换为Java Bean对象
 
 #### · 代码示例: 
@@ -62,7 +66,7 @@
 }
 ```
 
-## v0.0.1_2. @ParamName 指定前端传入VO时，VO中参数和变量的关系
+## 2. [v0.0.1] @ParamName 指定前端传入VO时，VO中参数和变量的关系
   @ParamName 适用于对象的字段上，支持在对象中，使用 @ParamName 注解，指定注入的参数名称。
   
 #### · 代码示例: 
@@ -102,7 +106,7 @@
 }
 ```
   
-## v0.0.1_3. 支持返回对象进行下载
+## 3. [v0.0.1] 支持返回对象进行下载
 
 返回DownloadBean和StreamDownloadBean进行下载。
 
@@ -126,7 +130,7 @@
 将下载一个名为 HelloWorld.txt 的文件
 ```
 
-## v0.0.1_4. 自动解析日期
+## 4. [v0.0.1] 自动解析日期
 
 支持自动将String类型解析为Date类型，支持多种格式。该方式同时支持@RequestParameter的注入和@JsonParam方式的注入，自动适应多种常用格式，例如``yyyy-MM-dd 
 HH:mm:ss``等标准格式，具体格式如下：
@@ -183,7 +187,7 @@ yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
 ```
 
 
-## v0.1.1_5. 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
+## 5. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
 
 在现存项目中，Date日期的使用绝大多数情况下并没有涉及到时区，也即默认Date是一个没有时区的值，实际上Date是有时区的，默认创建的时间为0时区CST。该值存入到MySQL的datetime数据中时，也是0时区CST的值。
 

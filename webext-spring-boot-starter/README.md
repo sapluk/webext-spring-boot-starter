@@ -1,5 +1,4 @@
 # spring-boot-web扩展
-
 本项目的目的用于扩展 spring boot web 项目，提供一些常用的功能
 
 ## 在spring-boot-web的基础上，支持一下特性：
@@ -21,7 +20,6 @@
     <version>0.0.1</version>
   </dependency>
 ```
-
 ``
 注：该扩展基于 spring boot 2.0.3，未在 spring boot 1.x 版本上测试
 ``
@@ -30,6 +28,8 @@
 
 ## v0.0.1_1. @JsonParam 自动解析json字符串为参数
   @JsonParam 用于接收前端的json字符串，并自动转换为Java Bean对象
+
+#### · 代码示例: 
 ```
     // controller
     @ResponseBody @RequestMapping("/testJsonParam")
@@ -40,7 +40,6 @@
     
     // 调用接口，@JsonParam 会接收参数key=test的值，如果值为json字符串格式，则将其转换为java bean对象，并将其注入到userDO中。 
 ```
-  
 #### · 请求示例: 
 ```
 请求时需要进行url编码访问
@@ -49,7 +48,6 @@
 未编码格式: 
     ./testJsonParam?test={"name":"abc","password":123456,"age":16}
 ```
-
 #### · 响应示例: 
 ```
 {
@@ -63,9 +61,10 @@
 }
 ```
 
-
 ## v0.0.1_2. @ParamName 指定前端传入VO时，VO中参数和变量的关系
   @ParamName 适用于对象的字段上，支持在对象中，使用 @ParamName 注解，指定注入的参数名称。
+  
+#### · 代码示例: 
 ```
     // VO 对象
     public class UserForm {
@@ -84,13 +83,12 @@
         return new WebJsonBean(userForm);
     }
 ```
-  测试连接 ```./testParamName?name=nick&addr=sz``` 等价于 ```./testParamName?name=nick&address=sz```
-  
+测试连接 ```./testParamName?name=nick&addr=sz``` 等价于 ```./testParamName?name=nick&address=sz```
+
 #### · 请求示例: 
 ```
 ./testParamName?name=nick&addr=sz
 ```
-
 #### · 响应示例: 
 ```
 {
@@ -110,6 +108,7 @@
 通过 ``@ResponseBody`` 提供ajax接口，如果返回值是byte[]则直接输出二进制，如果返回值是字符串，则原样输出，如果返回值是``DownloadBean``或``StreamDownloadBean``
 则下载文件（特别说明，这种方式只支持GET方式下载文件，不支持POST方式下载文件），其它均由jackson序列化为json文本(日期输出格式默认为yyyy-MM-dd HH:mm:ss)
 
+#### · 代码示例: 
 ```
     // controller
     @ResponseBody @RequestMapping("/testDownloadBean")
@@ -117,12 +116,10 @@
         return new DownloadBean("HelloWorld.txt", "hello world你好");
     }
 ```
-
 #### · 请求示例: 
 ```
 ./testDownloadBean
 ```
-
 #### · 响应示例: 
 ```
 将下载一个名为 HelloWorld.txt 的文件
@@ -154,6 +151,7 @@ yyyy-MM-dd'T'HH:mm:ss.SSSX  例如: 2017-10-18T16:00:00.000Z
 yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
 ```
 
+#### · 代码示例: 
 ```
     // controller
     @ResponseBody @RequestMapping("/testStringToData")
@@ -164,12 +162,11 @@ yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
         return new WebJsonBean(ErrorCode.MISSING_PARAMETERS, "time参数未提供或者格式错误，请确保time参数正确提供，如 ?time=20180808");
     }
 ```
-#### 请求示例: 
+#### · 请求示例: 
 ```
 ./testStringToData?time=20180808080808
 ```
-
-响应示例: 
+#### · 响应示例: 
 ```
 {
   "code": 0,
@@ -193,6 +190,7 @@ yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
 
 结论：在输出Date类型时，SpringBoot默认会转换成当前时区的，这和实际大多数用法不符，因此配置为直接输出为0时区的值。Date的输出格式为yyyy-MM-dd HH:mm:ss
 
+#### · 代码示例: 
 ```
     // controller
     @ResponseBody @RequestMapping("/testDataToString")
@@ -210,11 +208,11 @@ yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
         return new WebJsonBean(result);
     }
 ```
-#### 请求示例: 
+#### · 请求示例: 
 ```
 ./testDataToString?time=20180808
 ```
-#### 响应示例: 
+#### · 响应示例: 
 ```
 {
   "code": 0,

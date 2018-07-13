@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <title>扩展演示</title>
+
+  <style type="text/css">
+    h3, p, ul {font-family: Consolas, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;}
+    li {line-height: 30px;}
+    a {color: #409EFF; text-decoration: none;}
+    li, a, p {font-size: 18px;}
+  </style>
+</head>
+
+<body>
+<h1>spring-boot-web扩展演示</h1>
+
+<div>
+  <h3>1. @JsonParam 自动解析json字符串为参数</h3>
+  <p>>>> @JsonParam 用于接收前端的json字符串，并自动转换为Java Bean对象</p>
+  <ul>
+    <li> 传递json参数:
+      <a target="_blank" href="./testJsonParam?test=%7b%22name%22%3a%22abc%22%2c%22password%22%3a123456%2c%22age%22%3a16%7d">./testJsonParam?test={"name":"abc","password":123456,"age":16}</a>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>2. @ParamName 指定前端传入VO时，VO中参数和变量的关系</h3>
+  <p>>>> @ParamName 适用于对象的字段上，支持在对象中，使用 @ParamName 注解，指定注入的参数名称。</p>
+  <ul>
+    <li> 自定义ParamName:
+      <a target="_blank" href="./testParamName?name=nick&addr=sz">./testParamName?name=nick&addr=sz</a>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>3. 支持返回对象进行下载</h3>
+  <p>
+    >>> 返回DownloadBean和StreamDownloadBean进行下载。
+  </p>
+  <ul>
+    <li>下载文件:
+      <a target="_blank" href="./testDownloadBean">./testDownloadBean</a>
+    </li>
+    <li>下载文件(stream方式):
+      <a target="_blank" href="./testStreamDownloadBean_1">./testStreamDownloadBean_1</a>
+    </li>
+    <li>下载文件(stream方式)-静态文件(smile.jpg):
+      <a target="_blank" href="./testStreamDownloadBean_2">./testStreamDownloadBean_2</a>
+    </li>
+  </ul>
+
+</div>
+
+<div>
+  <h3>4. 自动解析日期</h3>
+  <p>>>> 支持自动将String类型解析为Date类型，支持多种格式。该方式同时支持@RequestParameter的注入和@JsonParam方式的注入</p>
+  <ul>
+    <li> 日期输出:
+      <a target="_blank" href="./testDataToString?time=20180808080808">./testDataToString?time=20180808080808</a>
+    </li>
+  </ul>
+</div>
+
+<div>
+  <h3>5. 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss</h3>
+  <p>>>> 演示日期的输出，Data, LocalDateTime, LocalDate, LocalTime
+  </p>
+  <ul>
+    <li> 日期输出:
+      <a target="_blank" href="./testDataToString?time=20180808">./testDataToString?time=20180808</a>
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>

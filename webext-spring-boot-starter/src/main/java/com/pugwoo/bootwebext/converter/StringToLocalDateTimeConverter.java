@@ -1,11 +1,11 @@
 package com.pugwoo.bootwebext.converter;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class StringToLocalDateTimeConverter implements Converter<String, LocalDateTime> {
 
@@ -20,7 +20,7 @@ public class StringToLocalDateTimeConverter implements Converter<String, LocalDa
 			return null;
 		}
 
-		String pattern = Formatters.determineDateFormat(strDate);
+		String pattern = DateFormatters.determineDateFormat(strDate);
 		if (pattern == null) {
 			LOGGER.error("unknown date format for {}", strDate);
 			return null;

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.pugwoo.bootwebext.converter.Formatters;
+import com.pugwoo.bootwebext.converter.DateFormatters;
 import com.pugwoo.bootwebext.converter.StringToDateConverter;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class MultiDateDeserializer extends StdDeserializer<Date> {
 		if(d == null) {
 			throw new JsonParseException(jp,
 			   "Unparseable date: \"" + date + "\". Supported formats: "
-			   + Formatters.DATE_FORMAT_REGEXPS.values());
+			   + DateFormatters.DATE_FORMAT_REGEXPS.values());
 		}
 		return d;
 	}

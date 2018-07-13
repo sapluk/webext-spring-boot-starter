@@ -1,12 +1,12 @@
 package com.pugwoo.bootwebext.converter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 将参数转化为Date。
@@ -26,7 +26,7 @@ public class StringToDateConverter implements Converter<String, Date> {
 		}
 		
 		try {
-			String pattern = Formatters.determineDateFormat(strDate);
+			String pattern = DateFormatters.determineDateFormat(strDate);
 			if(pattern == null) {
 				LOGGER.error("unknown date format for {}", strDate);
 				return null;

@@ -3,7 +3,7 @@ package com.pugwoo.bootwebext.converter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Formatters {
+public class DateFormatters {
 
     /**
      * 该字段请忽略 FindBugs-Field is a mutable collection 警告，

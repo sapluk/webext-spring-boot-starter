@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.pugwoo.bootwebext.converter.StringToDateConverter;
 import com.pugwoo.bootwebext.converter.StringToLocalDateTimeConverter;
 import com.pugwoo.bootwebext.resolver.json.JsonParamArgumentResolver;
-import com.pugwoo.bootwebext.resolver.paramname.RenamingProcessor;
 
 /**
  * @date 2018-06-21
@@ -51,7 +50,6 @@ public class SpringBootWebextAutoConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new JsonParamArgumentResolver());
-		resolvers.add(new RenamingProcessor(true));
 	}
 
     /**

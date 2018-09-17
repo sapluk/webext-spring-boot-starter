@@ -31,9 +31,6 @@ public class TestStringToDataController {
 
     /**
      * http://127.0.0.1:8080/testStringToDate2?myDate=20180808
-     *
-     * 发现问题：对于对象的形式，String没有转成Date
-     * 但是这个来自于spring自身，在以前的4.x版本中没有这个问题
      * @param form
      * @return
      */

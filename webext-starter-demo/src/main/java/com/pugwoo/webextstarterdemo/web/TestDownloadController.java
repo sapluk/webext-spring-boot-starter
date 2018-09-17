@@ -16,18 +16,28 @@ import java.io.InputStream;
 @RestController
 public class TestDownloadController {
 
+	/**
+	 * 127.0.0.1:8080/testDownloadBean
+	 * @return
+	 */
 	@RequestMapping("/testDownloadBean")
 	public DownloadBean testDownloadBean() {
 		return new DownloadBean("testDownloadBean.txt", "hello world你好");
 	}
-	
+
+	/**
+	 * 127.0.0.1:8080/testStreamDownloadBean_1
+	 * @return
+	 */
 	@RequestMapping("/testStreamDownloadBean_1")
 	public StreamDownloadBean testStreamDownloadBean1() {
 		return new StreamDownloadBean("testStreamDownloadBean_1.txt",
 				new ByteArrayInputStream("hello world!你好".getBytes()));
 	}
 
-	/** 输出静态文件 */
+	/** 输出静态文件
+	 * 127.0.0.1:8080/testStreamDownloadBean_2
+	 */
     @RequestMapping("/testStreamDownloadBean_2")
     public StreamDownloadBean testStreamDownloadBean2() {
         InputStream resourceAsStream = getClass().getResourceAsStream("/static/smile.jpg");

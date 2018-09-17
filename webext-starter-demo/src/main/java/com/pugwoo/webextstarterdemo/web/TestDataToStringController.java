@@ -18,6 +18,11 @@ import java.util.Map;
 @RestController
 public class TestDataToStringController {
 
+    /**
+     * http://127.0.0.1:8080/testDataToString?time=20180911
+     * @param time
+     * @return
+     */
     @RequestMapping("/testDataToString")
     public WebJsonBean testDataToString(Date time){
         Map<String, Object> result = new HashMap<>();

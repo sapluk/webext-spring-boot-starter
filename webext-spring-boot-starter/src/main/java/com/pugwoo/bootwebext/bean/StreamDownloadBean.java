@@ -38,7 +38,7 @@ public class StreamDownloadBean extends ResponseEntity<InputStreamResource> {
 	
 	private static HttpHeaders getHeaders(String filename, Map<String, String> headers) {
 		HttpHeaders h = new HttpHeaders();
-		if (filename != null) {
+		if (filename != null && (headers == null || headers.get("Content-Disposition") == null)) {
 			try {
 				filename = URLEncoder.encode(filename, "UTF-8");
 			} catch (UnsupportedEncodingException e) { // ignore

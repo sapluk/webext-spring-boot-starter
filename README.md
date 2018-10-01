@@ -1,29 +1,29 @@
 # webext-spring-boot-starter
+
 ## 1. 项目简述：spring-boot-web扩展
 
-本项目的目的用于扩展 spring boot web 项目，提供一些常用的功能。
+本项目的目的用于扩展spring-boot-web项目，提供一些常用的功能，完全不影响原spring-boot-web自带的功能，同时无需任何配置。
 
-## 2. 适用范围：spring boot 2.x web 项目
+## 2. 适用范围：spring-boot-web 2.x
 
- 该项目不支持 ``spring boot 1.x``。
+ 该项目不支持 ``spring-boot 1.x``。
 
 ## 3. 功能介绍：在spring-boot-web的基础上，支持以下特性：
 1. [v0.0.1] @JsonParam 自动解析json字符串为参数
-2. [v0.0.1] @ParamName 制定前端传入VO时，VO中参数和变量的关系
-3. [v0.0.1] 支持返回对象进行下载
-4. [v0.0.1] 自动解析日期
-5. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
+2. [v0.0.1] 支持返回对象进行下载
+3. [v0.0.1] 自动解析日期，将String转换成Date和LocalDateTime
+4. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
 
 ## 4. 快速使用
+
 1. IDE 中新建一个 spring boot web 项目
 
 2. 在您的 spring boot 项目的 pom.xml 文件引用：
-
 ```
   <dependency>
     <groupId>com.pugwoo</groupId>
     <artifactId>webext-spring-boot-starter</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
   </dependency>
 ```
 
@@ -66,47 +66,7 @@
 }
 ```
 
-## 2. [v0.0.1] @ParamName 指定前端传入VO时，VO中参数和变量的关系
-  @ParamName 适用于对象的字段上，支持在对象中，使用 @ParamName 注解，指定注入的参数名称。
-  
-#### · 代码示例: 
-```
-    // VO 对象
-    public class UserForm {
-    
-        private String name;
-    	
-        @ParamName("addr")
-        private String address;
-    	
-        // getter/setter...
-    }
-    
-    // controller
-    @ResponseBody @RequestMapping("/testParamName")
-    public WebJsonBean testParamName(UserForm userForm) {
-        return new WebJsonBean(userForm);
-    }
-```
-测试连接 ```./testParamName?name=nick&addr=sz``` 等价于 ```./testParamName?name=nick&address=sz```
-
-#### · 请求示例: 
-```
-./testParamName?name=nick&addr=sz
-```
-#### · 响应示例: 
-```
-{
-  "code": 0,
-  "msg": "成功",
-  "data": {
-    "name": "nick",
-    "address": "sz"
-  }
-}
-```
-  
-## 3. [v0.0.1] 支持返回对象进行下载
+## 2. [v0.0.1] 支持返回对象进行下载
 
 返回DownloadBean和StreamDownloadBean进行下载。
 
@@ -130,7 +90,7 @@
 将下载一个名为 HelloWorld.txt 的文件
 ```
 
-## 4. [v0.0.1] 自动解析日期
+## 3. [v0.0.1] 自动解析日期
 
 支持自动将String类型解析为Date类型，支持多种格式。该方式同时支持@RequestParameter的注入和@JsonParam方式的注入，自动适应多种常用格式，例如``yyyy-MM-dd 
 HH:mm:ss``等标准格式，具体格式如下：
@@ -187,7 +147,7 @@ yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
 ```
 
 
-## 5. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
+## 4. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
 
 在现存项目中，Date日期的使用绝大多数情况下并没有涉及到时区，也即默认Date是一个没有时区的值，实际上Date是有时区的，默认创建的时间为0时区CST。该值存入到MySQL的datetime数据中时，也是0时区CST的值。
 
@@ -231,3 +191,4 @@ yyyy-MM-dd'T'HH:mm:ss.SSS   例如: 2017-10-18T16:00:00.000
   }
 }
 ```
+

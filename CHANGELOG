@@ -1,0 +1,2 @@
+2018年10月2日
+v0.0.4 - [improve] 对于下载文件DownloadBean，如果外部已经指定了Content-Disposition，则该插件不再覆盖

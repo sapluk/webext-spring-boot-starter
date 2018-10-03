@@ -31,6 +31,17 @@ public class StreamDownloadBean extends ResponseEntity<InputStreamResource> {
 	public StreamDownloadBean(String filename, InputStream in, Map<String, String> headers) {
 		super(new InputStreamResource(in), getHeaders(filename, headers), HttpStatus.OK);
 	}
+
+	/**
+	 * 构造一个下载Bean
+	 * @param filename 下载文件的保存名称
+	 * @param in 输入流
+	 * @param headers 自定义头部
+	 * @param status 自定义响应状态
+	 */
+	public StreamDownloadBean(String filename, InputStream in, Map<String, String> headers, HttpStatus status) {
+		super(new InputStreamResource(in), getHeaders(filename, headers), status);
+	}
 	
 	private static HttpHeaders getHeaders(String filename) {
 		return getHeaders(filename, null);

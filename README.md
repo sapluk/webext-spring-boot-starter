@@ -9,16 +9,17 @@
  该项目不支持 ``spring-boot 1.x``。
 
 ## 3. 功能介绍：在spring-boot-web的基础上，支持以下特性：
-1. [v0.0.1] @JsonParam 自动解析json字符串为参数
-2. [v0.0.1] 支持返回对象进行下载
-3. [v0.0.1] 自动解析日期，将String转换成Date和LocalDateTime
-4. [v0.0.1] 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
+
+1. @JsonParam 自动解析json字符串为参数
+2. 支持返回对象进行下载
+3. 自动解析日期，将String转换成Date和LocalDateTime
+4. 输出Date类型时，按0时区处理，输出格式yyyy-MM-dd HH:mm:ss
 
 ## 4. 快速使用
 
-1. IDE 中新建一个 spring boot web 项目
+1. 从start.spring.io网站下载项目模板，或者IDE中新建一个spring boot web项目
 
-2. 在您的 spring boot 项目的 pom.xml 文件引用：
+2. 在您的spring boot项目的pom.xml文件引用：
 ```
   <dependency>
     <groupId>com.pugwoo</groupId>
@@ -32,6 +33,7 @@
 # ====== 使用说明 ======
 
 ## 1. [v0.0.1] @JsonParam 自动解析json字符串为参数
+
   @JsonParam 用于接收前端的json字符串，并自动转换为Java Bean对象
 
 #### · 代码示例: 

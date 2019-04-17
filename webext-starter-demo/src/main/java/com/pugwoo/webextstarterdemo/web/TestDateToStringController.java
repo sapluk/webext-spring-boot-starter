@@ -16,15 +16,15 @@ import java.util.Map;
  * @date 2018-06-22
  */
 @RestController
-public class TestDataToStringController {
+public class TestDateToStringController {
 
     /**
      * http://127.0.0.1:8080/testDataToString?time=20180911
      * @param time
      * @return
      */
-    @RequestMapping("/testDataToString")
-    public WebJsonBean testDataToString(Date time){
+    @RequestMapping("/testDateToString")
+    public WebJsonBean testDateToString(Date time){
         Map<String, Object> result = new HashMap<>();
         if (time == null) {
             result.put("date", "time参数未提供或者格式错误，请确保time参数正确提供，如 ?time=20180808");
@@ -37,4 +37,5 @@ public class TestDataToStringController {
         result.put("localTime", LocalTime.now());
         return new WebJsonBean(result);
     }
+
 }

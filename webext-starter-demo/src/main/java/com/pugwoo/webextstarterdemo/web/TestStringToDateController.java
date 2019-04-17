@@ -14,15 +14,15 @@ import java.util.Date;
  * @date 2018-06-22
  */
 @RestController
-public class TestStringToDataController {
+public class TestStringToDateController {
 
     /**
      * http://127.0.0.1:8080/testStringToData?time=20180808
      * @param time
      * @return
      */
-    @RequestMapping("/testStringToData")
-    public WebJsonBean testStringToData(Date time){
+    @RequestMapping("/testStringToDate")
+    public WebJsonBean testStringToDate(Date time){
         if (time != null) {
             return new WebJsonBean(time);
         }

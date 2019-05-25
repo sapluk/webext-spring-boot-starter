@@ -19,7 +19,7 @@ import java.util.Date;
 public class TestStringToDateController {
 
     /**
-     * http://127.0.0.1:8080/testStringToData?time=20180808
+     * http://127.0.0.1:8080/testStringToDate?time=20180808
      * @param time
      * @return
      */
@@ -47,6 +47,15 @@ public class TestStringToDateController {
         return new WebJsonBean(form.getMyDate());
     }
 
+
+	/**
+	 * http://127.0.0.1:8080/testStringToDate3
+	 * {
+	 *     "myDate": "20190525123456"
+	 * }
+	 * @param form
+	 * @return
+	 */
     // TODO 这个有bug
     @PostMapping("/testStringToDate3")
     public WebJsonBean testStringDate3(@RequestBody MyForm form) {

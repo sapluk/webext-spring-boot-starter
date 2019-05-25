@@ -3,6 +3,8 @@ package com.pugwoo.webextstarterdemo.web;
 import com.pugwoo.webextstarterdemo.bean.ErrorCode;
 import com.pugwoo.webextstarterdemo.bean.WebJsonBean;
 import com.pugwoo.webextstarterdemo.web.form.MyForm;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,6 +38,18 @@ public class TestStringToDateController {
      */
     @RequestMapping("/testStringToDate2")
     public WebJsonBean testStringDate2(MyForm form) {
+        if(form == null) {
+            return new WebJsonBean(ErrorCode.COMMON_BIZ_ERROR, "form is null");
+        }
+        if(form.getMyDate() == null) {
+            return new WebJsonBean(ErrorCode.COMMON_BIZ_ERROR, "form.myDate is null");
+        }
+        return new WebJsonBean(form.getMyDate());
+    }
+
+    // TODO 这个有bug
+    @PostMapping("/testStringToDate3")
+    public WebJsonBean testStringDate3(@RequestBody MyForm form) {
         if(form == null) {
             return new WebJsonBean(ErrorCode.COMMON_BIZ_ERROR, "form is null");
         }

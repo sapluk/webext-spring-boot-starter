@@ -19,7 +19,7 @@ import java.util.Map;
 public class TestDateToStringController {
 
     /**
-     * http://127.0.0.1:8080/testDataToString?time=20180911
+     * http://127.0.0.1:8080/testDateToString?time=20180911
      * @param time
      * @return
      */

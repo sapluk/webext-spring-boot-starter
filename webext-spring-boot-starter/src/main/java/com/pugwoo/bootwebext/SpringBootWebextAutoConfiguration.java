@@ -9,12 +9,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pugwoo.bootwebext.converter.StringToDateConverter;
 import com.pugwoo.bootwebext.converter.StringToLocalDateTimeConverter;
 import com.pugwoo.bootwebext.resolver.json.JsonParamArgumentResolver;
+import com.pugwoo.bootwebext.resolver.json.MyObjectMapper;
 
 /**
  * @date 2018-06-21
@@ -40,6 +43,19 @@ public class SpringBootWebextAutoConfiguration implements WebMvcConfigurer {
 	        }           
 	    };
 	}
+
+	/**
+	 * 配置json解析
+	 * {@link com.pugwoo.bootwebext.resolver.json.MyObjectMapper}
+	 */
+	@Bean
+	public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
+		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+		ObjectMapper objectMapper = new MyObjectMapper();
+		jsonConverter.setObjectMapper(objectMapper);
+		return jsonConverter;
+	}
+
 
     /**
      * 支持@JsonParam注解<br>

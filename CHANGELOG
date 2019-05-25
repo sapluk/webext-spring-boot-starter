@@ -3,3 +3,12 @@ v0.0.5 - [add] StreamDownloadBean提供自定义响应状态码方法
 
 2018年10月2日
 v0.0.4 - [improve] 对于下载文件DownloadBean，如果外部已经指定了Content-Disposition，则该插件不再覆盖
+
+2018年9月17日
+v0.0.3 - [del] 去掉@ParamName功能，首先这个功能并不是特别重要，一般不会在web层接收POJO上还进行复用，同时它和swagger读取方式不兼容；其次它和日期解析有冲突
+
+2018年7月13日
+v0.0.2 - [improve] 优化pom依赖
+
+2018年7月12日
+v0.0.1 - [init] 发布基础版本

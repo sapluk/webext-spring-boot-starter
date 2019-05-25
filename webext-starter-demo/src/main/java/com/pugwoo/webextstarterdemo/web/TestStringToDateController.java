@@ -3,6 +3,8 @@ package com.pugwoo.webextstarterdemo.web;
 import com.pugwoo.webextstarterdemo.bean.ErrorCode;
 import com.pugwoo.webextstarterdemo.bean.WebJsonBean;
 import com.pugwoo.webextstarterdemo.web.form.MyForm;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,15 +16,15 @@ import java.util.Date;
  * @date 2018-06-22
  */
 @RestController
-public class TestStringToDataController {
+public class TestStringToDateController {
 
     /**
      * http://127.0.0.1:8080/testStringToData?time=20180808
      * @param time
      * @return
      */
-    @RequestMapping("/testStringToData")
-    public WebJsonBean testStringToData(Date time){
+    @RequestMapping("/testStringToDate")
+    public WebJsonBean testStringToDate(Date time){
         if (time != null) {
             return new WebJsonBean(time);
         }
@@ -36,6 +38,18 @@ public class TestStringToDataController {
      */
     @RequestMapping("/testStringToDate2")
     public WebJsonBean testStringDate2(MyForm form) {
+        if(form == null) {
+            return new WebJsonBean(ErrorCode.COMMON_BIZ_ERROR, "form is null");
+        }
+        if(form.getMyDate() == null) {
+            return new WebJsonBean(ErrorCode.COMMON_BIZ_ERROR, "form.myDate is null");
+        }
+        return new WebJsonBean(form.getMyDate());
+    }
+
+    // TODO 这个有bug
+    @PostMapping("/testStringToDate3")
+    public WebJsonBean testStringDate3(@RequestBody MyForm form) {
         if(form == null) {
             return new WebJsonBean(ErrorCode.COMMON_BIZ_ERROR, "form is null");
         }

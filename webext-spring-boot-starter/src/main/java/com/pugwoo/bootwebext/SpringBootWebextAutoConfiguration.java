@@ -20,7 +20,6 @@ import com.pugwoo.bootwebext.resolver.json.JsonParamArgumentResolver;
 import com.pugwoo.bootwebext.resolver.json.MyObjectMapper;
 
 /**
- * @date 2018-06-21
  */
 @ConditionalOnWebApplication
 @Configuration
@@ -58,10 +57,7 @@ public class SpringBootWebextAutoConfiguration implements WebMvcConfigurer {
 
 
     /**
-     * 支持@JsonParam注解<br>
-     * 
-     *  示例: request:  time=20180621&who={"name":"abc","age":16}<br>
-     *  接口接收参数为 (@JsonParam("who") UserDO user)<br>
+     * 支持@JsonParam注解
      */
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

@@ -1,3 +1,6 @@
+2019年5月26日
+v0.0.6 - [fix] 修复对@RequestBody中Date字段序列化错误的bug
+
 2018年10月3日
 v0.0.5 - [add] StreamDownloadBean提供自定义响应状态码方法
 

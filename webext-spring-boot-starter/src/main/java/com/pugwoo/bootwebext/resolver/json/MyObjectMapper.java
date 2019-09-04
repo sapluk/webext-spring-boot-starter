@@ -1,5 +1,6 @@
 package com.pugwoo.bootwebext.resolver.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -14,7 +15,7 @@ public class MyObjectMapper extends ObjectMapper {
 
 	private static final long serialVersionUID = 7802045661502663726L;
 
-	public MyObjectMapper() {
+	public MyObjectMapper(boolean ignoreNullValue) {
 		super();
 		
 		setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));               // 设置日期格式
@@ -24,6 +25,10 @@ public class MyObjectMapper extends ObjectMapper {
 		configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true); // 自动将空字符串转成null值传入Object
 		
 		getSerializerProvider().setNullKeySerializer(new NullKeySerializer()); // 当map含有null key时，转成空字符串
+
+		if(ignoreNullValue) {
+			setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		}
 		
 		configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);  //属性key可以不用括号
 		configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);         //属性key使用单引号

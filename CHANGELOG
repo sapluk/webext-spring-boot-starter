@@ -1,3 +1,6 @@
+2019年9月4日
+v0.0.7 - [add] 支持设置jackson.default-property-inclusion=non_null排除掉转json中的null值
+
 2019年5月26日
 v0.0.6 - [fix] 修复对@RequestBody中Date字段序列化错误的bug
 

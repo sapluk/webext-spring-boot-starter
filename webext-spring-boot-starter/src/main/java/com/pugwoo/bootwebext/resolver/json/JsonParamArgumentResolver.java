@@ -21,7 +21,7 @@ import java.io.BufferedReader;
  */
 public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver {
 	
-	private static final ObjectMapper OBJECT_MAPPER = new MyObjectMapper();
+	private static final ObjectMapper OBJECT_MAPPER = new MyObjectMapper(false);
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {

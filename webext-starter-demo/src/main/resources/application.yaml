@@ -1,0 +1,2 @@
+jackson:
+  default-property-inclusion: non_null # 返回json数据忽略null属性

@@ -25,7 +25,7 @@ import java.util.List;
 @Configuration
 public class SpringBootWebextAutoConfiguration implements WebMvcConfigurer {
 
-	@Value("${jackson.default-property-inclusion:}")
+	@Value("${spring.jackson.default-property-inclusion:}")
 	private String inclusion;
 	
 	/**

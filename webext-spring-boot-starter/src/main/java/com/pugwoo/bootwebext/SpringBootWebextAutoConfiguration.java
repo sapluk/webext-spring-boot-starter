@@ -1,8 +1,11 @@
 package com.pugwoo.bootwebext;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pugwoo.bootwebext.converter.StringToDateConverter;
+import com.pugwoo.bootwebext.converter.StringToLocalDateTimeConverter;
+import com.pugwoo.bootwebext.resolver.json.JsonParamArgumentResolver;
+import com.pugwoo.bootwebext.resolver.json.MyObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -13,18 +16,17 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pugwoo.bootwebext.converter.StringToDateConverter;
-import com.pugwoo.bootwebext.converter.StringToLocalDateTimeConverter;
-import com.pugwoo.bootwebext.resolver.json.JsonParamArgumentResolver;
-import com.pugwoo.bootwebext.resolver.json.MyObjectMapper;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
- * @date 2018-06-21
  */
 @ConditionalOnWebApplication
 @Configuration
 public class SpringBootWebextAutoConfiguration implements WebMvcConfigurer {
+
+	@Value("${spring.jackson.default-property-inclusion:}")
+	private String inclusion;
 	
 	/**
 	 * 设置Date类型的输出格式为yyyy-MM-dd HH:mm:ss
@@ -51,17 +53,15 @@ public class SpringBootWebextAutoConfiguration implements WebMvcConfigurer {
 	@Bean
 	public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
 		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-		ObjectMapper objectMapper = new MyObjectMapper();
+		boolean isIgnoreNullValue = "non_null".equalsIgnoreCase(inclusion);
+		ObjectMapper objectMapper = new MyObjectMapper(isIgnoreNullValue);
 		jsonConverter.setObjectMapper(objectMapper);
 		return jsonConverter;
 	}
 
 
     /**
-     * 支持@JsonParam注解<br>
-     * 
-     *  示例: request:  time=20180621&who={"name":"abc","age":16}<br>
-     *  接口接收参数为 (@JsonParam("who") UserDO user)<br>
+     * 支持@JsonParam注解
      */
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

@@ -1,0 +1,113 @@
+### 测试 @JsonParam + @Validated / @Valid
+
+### ---------------------------------------------- 测试01 成功
+
+### @Valid @JsonParam
+POST http://localhost:8080/testValidJsonParam
+Content-Type: application/json
+
+{
+  "name": "成功",
+  "password": "testValidJsonParam",
+  "age": 16
+}
+
+### @Valid @RequestBody
+POST http://localhost:8080/testValidRequestBody
+Content-Type: application/json
+
+{
+  "name": "成功",
+  "password": "testValidRequestBody",
+  "age": 16
+}
+
+### @Validated @JsonParam
+POST http://localhost:8080/testValidatedJsonParam
+Content-Type: application/json
+
+{
+  "name": "成功",
+  "password": "testValidatedJsonParam",
+  "age": 16
+}
+
+### @Validated @RequestBody
+POST http://localhost:8080/testValidatedRequestBody
+Content-Type: application/json
+
+{
+  "name": "成功",
+  "password": "testValidatedRequestBody",
+  "age": 16
+}
+
+### ---------------------------------------------- 测试02 name=null or password is blank
+
+### @Valid @JsonParam
+POST http://localhost:8080/testValidJsonParam
+Content-Type: application/json
+
+{
+  "name": null,
+  "password": "testValidJsonParam",
+  "age": 16
+}
+
+### @Valid @RequestBody
+POST http://localhost:8080/testValidRequestBody
+Content-Type: application/json
+
+{
+  "name": null,
+  "password": "testValidRequestBody",
+  "age": 16
+}
+
+### @Validated @JsonParam
+POST http://localhost:8080/testValidatedJsonParam
+Content-Type: application/json
+
+{
+  "name": "testValidatedJsonParam",
+  "password": "",
+  "age": 16
+}
+
+### @Validated @RequestBody
+POST http://localhost:8080/testValidatedRequestBody
+Content-Type: application/json
+
+{
+  "name": "testValidatedRequestBody",
+  "password": "",
+  "age": 16
+}
+
+### ---------------------------------------------- 测试03 不给body
+
+### @Valid @JsonParam
+### 不给body，JsonParam解析为null，null是不做校验的
+POST http://localhost:8080/testValidJsonParam
+Content-Type: application/json
+### Response code: 200;
+
+### @Valid @RequestBody
+### 这个会报异常，因为没给body，是@RequestBody.required默认为true时因对象为null抛出异常
+POST http://localhost:8080/testValidRequestBody
+Content-Type: application/json
+### Response code: 400;
+
+### @Validated @JsonParam
+### 不给body，JsonParam解析为null，null是不做校验的
+POST http://localhost:8080/testValidatedJsonParam
+Content-Type: application/json
+### Response code: 200;
+
+### @Validated @RequestBody
+### 这个会报异常，因为没给body，是@RequestBody.required默认为true时因对象为null抛出异常
+POST http://localhost:8080/testValidatedRequestBody
+Content-Type: application/json
+### Response code: 400;
+
+###

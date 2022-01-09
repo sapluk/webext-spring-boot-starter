@@ -1,0 +1,60 @@
+### 测试 @JsonParam
+
+### api: testJsonParam: @JsonParam指定了value值
+### api: testJsonParamWithoutValue: @JsonParam未指定value值
+
+### --------------------------- api: testJsonParam:
+
+### 测试01 正确请求 url
+### /testJsonParam?test={"name":"abc","password":123456,"age":16}
+GET http://localhost:8080/testJsonParam?test=%7b%22name%22%3a%22abc%22%2c%22password%22%3a123456%2c%22age%22%3a16%7d
+Accept: application/json
+
+
+### 测试02 正确请求 x-www-form-urlencoded
+POST http://localhost:8080/testJsonParam
+Content-Type: application/x-www-form-urlencoded
+
+test={"name":"abc","password":"123456","age":16}
+
+
+### 测试03 正确请求 multipart/form-data
+POST http://localhost:8080/testJsonParam
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="test"
+
+{"name":"abc","password":"123456","age":16}
+--WebAppBoundary--
+
+### --------------------------- api: testJsonParamWithoutValue
+
+### 测试04 正确请求 application/json
+POST http://localhost:8080/testJsonParamWithoutValue
+Content-Type: application/json
+
+{
+  "name": "德玛西亚",
+  "password": 123456,
+  "age": 16
+}
+
+
+### 以下是无法解析的示例
+
+### 测试11 没给test字段，解析为null
+### /testJsonParam
+GET http://localhost:8080/testJsonParam
+Accept: application/json
+
+### 测试12 字段不对啊
+### /testJsonParam?test2={"name":"abc","password":123456,"age":16}
+GET http://localhost:8080/testJsonParam?test2=%7b%22name%22%3a%22abc%22%2c%22password%22%3a123456%2c%22age%22%3a16%7d
+Accept: application/json
+
+### 测试13 没给body啊
+POST http://localhost:8080/testJsonParamWithoutValue
+Content-Type: application/json
+
+###

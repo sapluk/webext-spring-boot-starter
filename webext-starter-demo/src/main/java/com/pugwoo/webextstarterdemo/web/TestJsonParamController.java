@@ -2,6 +2,7 @@ package com.pugwoo.webextstarterdemo.web;
 
 import com.pugwoo.bootwebext.JsonParam;
 import com.pugwoo.webextstarterdemo.bean.WebJsonBean;
+import com.pugwoo.webextstarterdemo.entity.TestVo;
 import com.pugwoo.webextstarterdemo.entity.UserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 测试 @JsonParam 自动解析json字符串为参数 <br/>
@@ -82,5 +85,19 @@ public class TestJsonParamController {
     public WebJsonBean testValidatedRequestBody(@Validated @RequestBody UserDO userDO){
         LOGGER.debug("testValidatedRequestBody: {}", userDO);
         return new WebJsonBean(userDO);
+    }
+    
+    // ---------------------------------------------------------------------------
+    
+    /**
+     * 测试 @JsonParam 泛型，可采用url, x-www-form-urlencoded, multipart/form-data获取到json参数，并反序列化后注入
+     * 测试见 http.testJsonParam.http
+     */
+    @RequestMapping("/testGenericJsonParam")
+    public Object testGenericJsonParam(
+            @JsonParam() TestVo<String, Integer, Long, Boolean, UserDO, Map<String, Object>, List<Long>> testVo
+    ) {
+        LOGGER.info("testGenericJsonParam: {}", testVo);
+        return testVo;
     }
 }

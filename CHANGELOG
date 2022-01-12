@@ -1,5 +1,5 @@
 v0.0.9 - [improve] @JsonParam支持@Validated进行数据校验
-
+       - [improve] @JsonParam支持泛型，与@RequestBody对Json的解析保持一致
 2019年9月5日
 v0.0.8 - [add] 支持设置spring.jackson.default-property-inclusion=non_null排除掉转json中的null值
 

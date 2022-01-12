@@ -41,6 +41,33 @@ Content-Type: application/json
 }
 
 
+### 测试05 正确请求 application/json 泛型
+POST http://localhost:8080/testGenericJsonParam
+Content-Type: application/json
+
+{
+  "a": "泛型测试",
+  "b": 123,
+  "c": 123456789,
+  "d": true,
+  "e": {
+    "name": "德玛西亚",
+    "password": 123456,
+    "age": 16
+  },
+  "f": {
+    "hello": "world",
+    "good": 123.45
+  },
+  "g": [
+    123,
+    456,
+    789,
+    1234567890123
+  ]
+}
+
+
 ### 以下是无法解析的示例
 
 ### 测试11 没给test字段，解析为null

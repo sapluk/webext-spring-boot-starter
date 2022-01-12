@@ -1,11 +1,15 @@
 package com.pugwoo.bootwebext.resolver.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.pugwoo.bootwebext.JsonParam;
 import org.springframework.core.Conventions;
+import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,6 +21,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import static com.pugwoo.bootwebext.resolver.utils.AbstractMessageConverterMethodArgumentResolverUtil.adaptArgumentIfNecessary;
 import static com.pugwoo.bootwebext.resolver.utils.AbstractMessageConverterMethodArgumentResolverUtil.isBindExceptionRequired;
@@ -26,6 +31,8 @@ import static com.pugwoo.bootwebext.resolver.utils.AbstractMessageConverterMetho
  * http://zjumty.iteye.com/blog/1927890
  * 些许改造 2015年8月15日 12:13:01
  * 2018年3月14日 16:52:42 完整支持了泛型，支持1或2个泛型，不支持3个及以上
+ *
+ * 2022年01月12日 支持泛型，采用springboot的方案，与@RequestBody对json的解析保持一致
  */
 public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver {
 	
@@ -95,82 +102,16 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
 			return null;
 		}
 		
-		String typeName = parameter.getGenericParameterType().getTypeName();
-		if(!typeName.contains("<")) {
-			return OBJECT_MAPPER.readValue(paramValue, parameter.getParameterType());
-		} else { // 处理泛型
-			JavaType type = parseGenericType(OBJECT_MAPPER.getTypeFactory(), typeName);
-			return OBJECT_MAPPER.readValue(paramValue, type);
-		}
-	}
-
-	/**
-	 * 解析泛型的类,只支持1个或2个的泛型类型，不支持3个及以上的
-	 * @param className
-	 * @return 如果没有泛型，则返回null
-	 * @throws ClassNotFoundException 
-	 */
-	private static JavaType parseGenericType(TypeFactory typeFactory, String className)
-			throws ClassNotFoundException {
-		if(className == null) { return null; }
-		int left = className.indexOf("<");
-		if(left < 0) {
-			return typeFactory.constructType(Class.forName(className.trim()));
-		}
-		int right = className.lastIndexOf(">");
-		
-		String baseClassName = className.substring(0, left);
-		String genericAll = className.substring(left + 1, right);
-		
-		assertLessThan3Dot(genericAll);
-		int dotIndex = getDotIndex(genericAll);
-		if(dotIndex < 0) {
-			return typeFactory.constructParametricType(Class.forName(baseClassName.trim()),
-					parseGenericType(typeFactory, genericAll));
-		} else {
-			String leftClassName = genericAll.substring(0, dotIndex);
-			String rightClassName = genericAll.substring(dotIndex + 1);
-			return typeFactory.constructParametricType(Class.forName(baseClassName.trim()),
-					parseGenericType(typeFactory, leftClassName),
-					parseGenericType(typeFactory, rightClassName));
-		}
-	}
-	
-	private static int getDotIndex(String str) {
-		if(str == null) { return -1; }
-		int bracket = 0;
-		for(int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if(c == ',' && bracket == 0) {
-				return i;
-			}
-			if(c == '<') {
-				bracket++;
-			} else if(c == '>') {
-				bracket--;
-			}
-		}
-		return -1;
-	}
-	
-	private static void assertLessThan3Dot(String str) {
-		if(str == null) { return; }
-		int counts = 0;
-		int bracket = 0;
-		for(int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if(c == ',' && bracket == 0) {
-				counts++;
-			}
-			if(c == '<') {
-				bracket++;
-			} else if(c == '>') {
-				bracket--;
-			}
-		}
-		if(counts > 1) {
-			throw new RuntimeException("spring-boot-conf not support more than two generic type, found " + (counts+1)
-				+ " for class:" +str);
+		// jsonString -> obj
+		Type type = parameter.getNestedGenericParameterType();
+		Class<?> clazz = parameter.getContainingClass();
+		JavaType javaType = OBJECT_MAPPER.constructType(GenericTypeResolver.resolveType(type, clazz));
+		try {
+			return OBJECT_MAPPER.readValue(paramValue, javaType);
+		} catch (InvalidDefinitionException ex) {
+			throw new HttpMessageConversionException("Type definition error: " + ex.getType(), ex);
+		} catch (JsonProcessingException ex) {
+			throw new HttpMessageNotReadableException("JSON parse error: " + ex.getOriginalMessage(), ex);
 		}
 	}
 
